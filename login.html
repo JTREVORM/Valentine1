@@ -25,19 +25,19 @@
       <!-- Simple GET form so we can read the name on index.html -->
       <form action="index.html" method="GET" class="login-form">
         <div class="field-group">
-          <label for="nameInput">Dhiren's Baby</label>
+          <label for="nameInput">Your lover's second name</label>
           <input
             id="nameInput"
             name="name"
             type="text"
-            placeholder="e.g. Alex"
+            placeholder="e.g. Joseph"
             autocomplete="name"
             required
           />
         </div>
 
         <div class="field-group">
-          <label for="passwordInput">What's our favorite study place ?</label>
+          <label for="passwordInput">What is your first name ?</label>
           <input
             id="passwordInput"
             name="password"
@@ -61,8 +61,8 @@
         var passwordInput = document.getElementById("passwordInput");
         var loginError = document.getElementById("loginError");
 
-        var expectedName = "Kirtanaashini";
-        var expectedPassword = "CoffeeBean";
+        var expectedName = "Trevor";
+        var expectedPassword = "Namajja";
 
         form.addEventListener("submit", function (e) {
           e.preventDefault();
