@@ -1,8 +1,17 @@
+const nameTarget = document.getElementById("nameTarget");
+const bgmToggle = document.getElementById("bgmToggle");
+const bgm = document.getElementById("bgm");
+
 const yesBtn = document.getElementById("yesBtn");
 const noBtn = document.getElementById("noBtn");
 const message = document.getElementById("message");
+const videoModal = document.getElementById("videoModal");
+const modalVideo = document.getElementById("modalVideo");
+const videoModalClose = document.querySelector(".video-modal__close");
+const videoModalOverlay = document.querySelector(".video-modal__overlay");
 
 let noClicks = 0;
+let currentName = "";
 
 function showMessage(text, celebrate = false) {
   message.textContent = text;
@@ -15,6 +24,15 @@ function showMessage(text, celebrate = false) {
   // force reflow so the transition retriggers
   void message.offsetWidth;
   message.classList.add("visible");
+}
+
+function getQueryParams() {
+  const params = new URLSearchParams(window.location.search);
+  const entries = {};
+  for (const [key, value] of params.entries()) {
+    entries[key] = value;
+  }
+  return entries;
 }
 
 function createHeart(x, y) {
@@ -33,8 +51,58 @@ function createHeart(x, y) {
   );
 }
 
+// Read name from URL (coming from login.html) and personalize
+const query = getQueryParams();
+if (query.name) {
+  currentName = query.name.trim();
+  if (currentName) {
+    nameTarget.textContent = `, ${currentName}`;
+  }
+} else {
+  // If someone opens index.html directly, gently send them to login
+  window.location.replace("login.html");
+}
+
+function showVideo(videoSrc) {
+  modalVideo.src = videoSrc;
+  videoModal.classList.remove("hidden");
+  modalVideo.play().catch((err) => {
+    console.error("Video autoplay failed:", err);
+  });
+}
+
+function closeVideo() {
+  modalVideo.pause();
+  modalVideo.src = "";
+  videoModal.classList.add("hidden");
+}
+
+videoModalClose.addEventListener("click", closeVideo);
+videoModalOverlay.addEventListener("click", closeVideo);
+
+// Background music toggle
+if (bgmToggle && bgm) {
+  bgmToggle.addEventListener("click", () => {
+    if (bgm.paused) {
+      bgm.play().catch((err) => console.error("BGM play failed:", err));
+      bgmToggle.classList.add("is-playing");
+    } else {
+      bgm.pause();
+      bgmToggle.classList.remove("is-playing");
+    }
+  });
+}
+
+// Close on Escape key
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && !videoModal.classList.contains("hidden")) {
+    closeVideo();
+  }
+});
+
 yesBtn.addEventListener("click", (e) => {
-  showMessage("Yay! You just made my whole day. 💘", true);
+  const nameBit = currentName ? `, ${currentName}` : "";
+  showMessage(`Yay! You just made my whole day${nameBit}. 💘`, true);
 
   // burst of hearts
   const rect = yesBtn.getBoundingClientRect();
@@ -46,6 +114,9 @@ yesBtn.addEventListener("click", (e) => {
     const offsetY = (Math.random() - 0.5) * 30;
     createHeart(centerX + offsetX, centerY + offsetY);
   }
+
+  // Show and play yes.mp4 video
+  showVideo("yes.mp4");
 });
 
 noBtn.addEventListener("mouseenter", () => {
@@ -59,7 +130,8 @@ noBtn.addEventListener("mouseenter", () => {
     showMessage("Okay, okay, I get it... but I’m still choosing you. 💌");
   }
 
-  const card = noBtn.closest(".card");
+  const card =
+    noBtn.closest(".valentine-card") || noBtn.closest(".card") || document.body;
   const bounds = card.getBoundingClientRect();
   const btnRect = noBtn.getBoundingClientRect();
 
@@ -86,5 +158,34 @@ noBtn.addEventListener("mouseenter", () => {
 noBtn.addEventListener("click", () => {
   // In case someone actually manages to click it on mobile
   showMessage("You tapped No, but my heart definitely heard Yes. 💞");
+  
+  // Show and play no.mp4 video
+  showVideo("no.mp4");
 });
 
+// Stacked cards scroll effect using GSAP + ScrollTrigger
+if (window.gsap && window.ScrollTrigger) {
+  gsap.registerPlugin(ScrollTrigger);  const cards = gsap.utils.toArray(".c-card");
+  const lastIndex = cards.length - 1;
+
+  if (cards.length > 0) {
+    const lastCardST = ScrollTrigger.create({
+      trigger: cards[lastIndex],
+      start: "center center",
+    });
+
+    cards.forEach((card, index) => {
+      const scale = index === lastIndex ? 1 : 0.85;      gsap.to(card, {
+        scale,
+        scrollTrigger: {
+          trigger: card,
+          start: "top top",
+          end: () => lastCardST.start,
+          pin: true,
+          pinSpacing: false,
+          scrub: 0.5,
+        },
+      });
+    });
+  }
+}

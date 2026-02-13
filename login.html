@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Login • Valentine</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="login-body">
+    <div class="background-hearts"></div>
+
+    <main class="card">
+      <div class="container">
+      <h1 class="title">Suprise Baby! 💘</h1>
+      <p class="subtitle">
+        First, verify that you're my favorite person in the world.
+      </p>
+
+      <!-- Simple GET form so we can read the name on index.html -->
+      <form action="index.html" method="GET" class="login-form">
+        <div class="field-group">
+          <label for="nameInput">Dhiren's Baby</label>
+          <input
+            id="nameInput"
+            name="name"
+            type="text"
+            placeholder="e.g. Alex"
+            autocomplete="name"
+            required
+          />
+        </div>
+
+        <div class="field-group">
+          <label for="passwordInput">What's our favorite study place ?</label>
+          <input
+            id="passwordInput"
+            name="password"
+            type="password"
+            placeholder="Make up something cute"
+            autocomplete="off"
+            required
+          />
+        </div>
+
+        <button type="submit" class="btn yes login-btn">Enter 💌</button>
+        <p id="loginError" class="message login-message hidden"></p>
+      </form>
+    </div>
+    </main>
+
+    <script>
+      (function () {
+        var form = document.querySelector(".login-form");
+        var nameInput = document.getElementById("nameInput");
+        var passwordInput = document.getElementById("passwordInput");
+        var loginError = document.getElementById("loginError");
+
+        var expectedName = "Kirtanaashini";
+        var expectedPassword = "CoffeeBean";
+
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          loginError.classList.add("hidden");
+
+          var name = nameInput.value.trim();
+          var password = passwordInput.value.trim();
+
+          if (name === expectedName && password === expectedPassword) {
+            window.location.href =
+              "index.html?name=" + encodeURIComponent(expectedName);
+            return;
+          }
+
+          loginError.textContent = "You're not my baby. Try again? 💗";
+          loginError.classList.remove("hidden");
+        });
+      })();
+    </script>
+  </body>
+  </html>
+

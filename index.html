@@ -14,20 +14,142 @@
   </head>
   <body>
     <div class="background-hearts"></div>
-    <main class="card">
-      <h1 class="title">Will you be my <span>Valentine</span>?</h1>
-      <p class="subtitle">
-        I made this little page just to ask you something important. 💌
-      </p>
 
-      <div class="buttons">
-        <button id="yesBtn" class="btn yes">Yes 💖</button>
-        <button id="noBtn" class="btn no">No 🙈</button>
+    <!-- Background music toggle -->
+    <button id="bgmToggle" class="bgm-toggle" aria-label="Toggle background music" title="Music on/off">
+      <span class="bgm-toggle__icon bgm-toggle__icon--on">♪</span>
+      <span class="bgm-toggle__icon bgm-toggle__icon--off">♫</span>
+    </button>
+    <audio id="bgm" loop>
+      <source src="bgm.mp3" type="audio/mpeg" />
+    </audio>
+    <section class="stacked-section">
+      <header class="stacked-header">
+        <p>Just a few little reasons</p>
+        <h1>Why I’d choose you again and again as my Valentine</h1>
+        <div>
+          Scroll down and watch the cards stack up, just like all the tiny
+          moments that brought us right here.
+        </div>
+      </header>
+
+      <div class="l-cards">
+        <article class="c-card">
+          <div class="c-card__description">
+            <div class="c-card__tagline">Reason #1</div>
+            <h2 class="c-card__title">You are my first and last baby!</h2>
+            <div class="c-card__excerpt">
+             You always light me up and make me feel happiest when I'm with you.
+            </div>
+          </div>
+          <figure class="c-card__figure">
+            <img src="pic/1.jpeg" alt="Reason 1" />
+          </figure>
+        </article>
+
+        <article class="c-card">
+          <div class="c-card__description">
+            <div class="c-card__tagline">Reason #2</div>
+            <h2 class="c-card__title">You’re the prettiest cutest girl ever!</h2>
+            <div class="c-card__excerpt">
+              Your laugh, your smiles and your beautiful cheeks are the prettiest things in the world.
+            </div>
+          </div>
+          <figure class="c-card__figure">
+            <img src="pic/2.jpeg" alt="Reason 2" />
+          </figure>
+        </article>
+
+        <article class="c-card">
+          <div class="c-card__description">
+            <div class="c-card__tagline">Reason #3</div>
+            <h2 class="c-card__title">Without you, the future looks dull</h2>
+            <div class="c-card__excerpt">
+              Through thick and thin, through good and bad, I know I will always be there for you.
+            </div>
+          </div>
+          <figure class="c-card__figure">
+            <img src="pic/3.jpeg" alt="Reason 3" />
+          </figure>
+        </article>
+
+        <article class="c-card">
+          <div class="c-card__description">
+            <div class="c-card__tagline">Reason #4</div>
+            <h2 class="c-card__title">I love hanging out with you!</h2>
+            <div class="c-card__excerpt">
+              The best times are the ones we spend together, laughing, talking and just being ourselves.
+            </div>
+          </div>
+          <figure class="c-card__figure">
+            <img src="pic/4.jpeg" alt="Reason 4" />
+          </figure>
+        </article>
+
+        <article class="c-card">
+          <div class="c-card__description">
+            <div class="c-card__tagline">Reason #5</div>
+            <h2 class="c-card__title">You’re my comfort place</h2>
+            <div class="c-card__excerpt">
+              With you I feel so sleepy and comfortable, I always want to cuddle you and fall asleep.
+            </div>
+          </div>
+          <figure class="c-card__figure c-card__figure--horizontal">
+            <img src="pic/5.jpeg" alt="Reason 5" />
+          </figure>
+        </article>
+
+        <article class="c-card">
+          <div class="c-card__description">
+            <div class="c-card__tagline">Reason #6</div>
+            <h2 class="c-card__title">I want to celebrate all my valentines with you</h2>
+            <div class="c-card__excerpt">
+              Even if i didnt ask you to be my valentine few years ago, I want to celebrate all my valentines with you.
+            </div>
+          </div>
+          <figure class="c-card__figure">
+            <img src="pic/6.jpeg" alt="Reason 6" />
+          </figure>
+        </article>
+
+        <article class="c-card valentine-card">
+          <div class="c-card__description">
+            <div class="c-card__tagline">And after all of that…</div>
+            <h2 class="c-card__title">
+              Will you be my <span>Valentine</span
+              ><span id="nameTarget"></span>?
+            </h2>
+            <div class="c-card__excerpt">
+              I made this little page just to ask you one simple question, after
+              stacking up all the tiny reasons I’m so grateful for you.
+            </div>
+
+            <div class="buttons">
+              <button id="yesBtn" class="btn yes">Yes 💖</button>
+              <button id="noBtn" class="btn no">No 🙈</button>
+            </div>
+
+            <p id="message" class="message hidden"></p>
+          </div>
+        </article>
       </div>
 
-      <p id="message" class="message hidden"></p>
-    </main>
+      <div class="spacer"></div>
+    </section>
 
+    <!-- Video Modal -->
+    <div id="videoModal" class="video-modal hidden">
+      <div class="video-modal__overlay"></div>
+      <div class="video-modal__content">
+        <button class="video-modal__close" aria-label="Close video">&times;</button>
+        <video id="modalVideo" class="video-modal__video" controls autoplay>
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="script.js"></script>
   </body>
   </html>
